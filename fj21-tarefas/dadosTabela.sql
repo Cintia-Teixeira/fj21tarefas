@@ -1,0 +1,1 @@
+INSERT INTO Tarefa (descricao, finalizado, dataFinalizacao) VALUES ('Estudar JPA e Hibernate', 'true', '2019-09-27');
