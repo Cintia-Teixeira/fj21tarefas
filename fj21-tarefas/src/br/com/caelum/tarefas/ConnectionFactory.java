@@ -31,12 +31,15 @@ public class ConnectionFactory {
 		statement.execute(tabelaTarefas);
 
 		// criando usuário
-		String tabelaUsuarios = "CREATE TABLE IF NOT EXISTS usuarios (" + " login VARCHAR(255)," + " senha VARCHAR(255)"
-				+ " usuario VARCHAR(255)"
-				+ ")"; 
+		String tabelaUsuarios = "CREATE TABLE IF NOT EXISTS usuarios ("
+				+ " id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," + " login VARCHAR(255)," + " senha VARCHAR(255)"
+				+ ")";
 		statement.execute(tabelaUsuarios);
 
+		String usuarioPadrao = "INSERT INTO usuarios (" + "login," + "senha"
+				+ ") SELECT 'usuario123', '123' WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'usuario123')";
 
+		statement.execute(usuarioPadrao);
 
 		// lendo os registros
 		PreparedStatement stmt = connection.prepareStatement("select * from usuarios");
@@ -45,9 +48,8 @@ public class ConnectionFactory {
 		while (resultSet.next()) {
 			String login = resultSet.getString("login");
 			String senha = resultSet.getString("senha");
-			String usuario = resultSet.getString("usuario");
 
-			System.out.println(login + " - " + senha + " - " + usuario);
+			System.out.println(login + " - " + senha);
 		}
 
 		return connection;
